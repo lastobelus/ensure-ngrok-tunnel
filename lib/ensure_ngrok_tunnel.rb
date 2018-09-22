@@ -40,8 +40,8 @@ module EnsureNgrokTunnel
       end
     rescue
       retries += 1
-      hostname = ENV.fetch('API_DOMAIN')
-      puts "starting ngrok tunnel for #{hostname}"
+      name = config['name'] || config['hostname'] || config['subdomain'] || ENV.fetch('DOMAIN', '????')
+      puts "starting ngrok tunnel for #{name}"
       begin
         response = RestClient.post ngrok_url, config.to_json, {content_type: :json, accept: :json}
       rescue => e
