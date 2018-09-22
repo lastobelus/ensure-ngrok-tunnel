@@ -21,6 +21,8 @@ In your development.rb, call `EnsureNgrokTunnel.start` with a [valid ngrok confi
 
 To determine whether the tunnel already exists, `EnsureNgrokTunnel` just looks for any tunnel bound to the port specified by `addr` in the config, or if not set, in `ENV['PORT']`. If you are using a config that just specifies a tunnel by name, you can optionally pass the port  as `port: XXXX`.
 
+If an instance of ngrok is already running on the standard port (4040), `EnsureNgrokTunnel` will talk to it, otherwise it spawns one with `ngrok start --none` (this instance should die when the parent process does, though with rails development the usual spring/fs-watch shenanigans will probably occasionally result in zombied ngroks).
+
 `EnsureNgrokTunnel` returns the tunnel url.
 
 Example:
