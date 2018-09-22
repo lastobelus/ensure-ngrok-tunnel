@@ -53,6 +53,6 @@ module EnsureNgrokTunnel
       retry unless retries > 5
     end
 
-    ngrok_url.split(%r{//}).last
+    ngrok_url
   end
 end
