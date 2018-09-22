@@ -5,7 +5,7 @@ module EnsureNgrokTunnel
     require 'json'
     require 'open-uri'
 
-    port ||= config['port'] || config[:port] || ENV.fetch("PORT")
+    port ||= config['addr'] || config[:addr] || ENV.fetch("PORT")
 
     puts "setting up ngrok"
     ngrok_url = false

@@ -22,7 +22,29 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+In your development.rb, call `EnsureNgrokTunnel.start` with a [valid ngrok config](https://ngrok.com/docs#config). If you have tunnels defined in your global ngrok config, this could just be `{name: 'name-of-my-tunnel'}`.
+
+To determine whether the tunnel already exists, `EnsureNgrokTunnel` just looks for any tunnel bound to the port specified by `addr` in the config, or if not set, in `ENV['PORT']`. If you are using a config that just specifies a tunnel by name, you can optionally pass the port  as `port: XXXX`.
+
+`EnsureNgrokTunnel` returns the tunnel url.
+
+Example:
+```ruby
+  server_port = ENV.fetch('PORT')
+  ngrok_url = EnsureNgrokTunnel.start(
+    config: {
+      name: Rails.application.class.parent.name.underscore,
+      addr: server_port,
+      proto: 'tls',
+      hostname: ENV.fetch('API_DOMAIN'),
+      key: Rails.root.join('certificates', 'development-key.pem').to_s,
+      crt: Rails.root.join('certificates', 'development-cert.pem').to_s
+    },
+    port: server_port
+  )
+
+  puts "[NGROK] tunneling at " + ngrok_url
+```
 
 ## Development
 
