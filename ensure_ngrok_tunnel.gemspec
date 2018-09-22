@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["lastobelus@mac.com"]
 
   spec.summary       = %q{Ensure an ngrok tunnel is started}
-  spec.description   = %q{This tiny gem has a singular tunnel: ensure there is an ngrok tunnel running for the specified port.}
+  spec.description   = %q{This tiny gem has a singular purpose: ensure there is an ngrok tunnel running for the specified port.}
   spec.homepage      = "https://github.com/lastobelus/ensure_ngrok_tunnel"
   spec.license       = "MIT"
 
