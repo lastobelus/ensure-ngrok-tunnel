@@ -27,7 +27,7 @@ If an instance of ngrok is already running on the standard port (4040), `EnsureN
 
 Example:
 ```ruby
-  server_port = ENV.fetch('PORT')
+  server_port = ENV.fetch('TUNNEL_PORT')
   ngrok_url = EnsureNgrokTunnel.start(
     config: {
       name: Rails.application.class.parent.name.underscore,
@@ -42,6 +42,8 @@ Example:
 
   puts "[NGROK] tunneling at " + ngrok_url
 ```
+
+**NOTE:** be careful about using the standard PORT env var in Rails with sidekiq. When using heroku local & a Procfile with web & worker processes, the PORT variable seems to get incremented by 100 in the worker process, which will cause `EnsureNgrokTunnel` not to find the tunnel in whichever is the second process to launch.
 
 ## Development
 

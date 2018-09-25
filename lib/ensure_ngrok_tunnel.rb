@@ -5,9 +5,8 @@ module EnsureNgrokTunnel
     require 'json'
     require 'open-uri'
 
-    port ||= config['addr'] || config[:addr] || ENV.fetch("PORT")
+    port ||= config[:addr] || ENV.fetch("PORT")
 
-    puts "setting up ngrok"
     ngrok_url = false
     ngrok_process = nil
     ngrok = nil
@@ -29,6 +28,7 @@ module EnsureNgrokTunnel
     end
 
     retries = 0
+
     begin
       ngrok = JSON.parse(ngrok)
       tunnel = ngrok['tunnels'].detect{|t| t['config']['addr'].split(':').last.to_s == port.to_s}
@@ -40,8 +40,7 @@ module EnsureNgrokTunnel
       end
     rescue
       retries += 1
-      name = config['name'] || config['hostname'] || config['subdomain'] || ENV.fetch('DOMAIN', '????')
-      puts "starting ngrok tunnel for #{name}"
+      name = config[:name] || config[:hostname] || config[:subdomain] || ENV.fetch('DOMAIN', '????')
       begin
         response = RestClient.post ngrok_url, config.to_json, {content_type: :json, accept: :json}
       rescue => e
